@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:11.9.0
-    working_directory: ~/alia
+    working_directory: ~/odin
     steps:
       - checkout
       - setup_remote_docker
@@ -49,7 +49,7 @@ jobs:
             ssh-keyscan ${HOST_IP} >> ~/.ssh/known_hosts
       - run:
           name: Deploy master
-          command: if [ "${CIRCLE_BRANCH}" == "master" ]; then ssh root@${HOST_IP} 'cd /var/www/alia-bot/scripts && . deploy.sh'; else echo "Skipped"; fi
+          command: if [ "${CIRCLE_BRANCH}" == "master" ]; then ssh root@${HOST_IP} 'cd /var/www/discord-bot/scripts && . deploy.sh'; else echo "Skipped"; fi
 workflows:
   version: 2
   build-deploy:

@@ -5,9 +5,8 @@
 // Commands:
 // . ? is|remember <key> - Returns a string
 // . ? <key> is <value>. - Returns nothing. Remembers the text for next time!
-// . ? what do you remember - Returns top 5 hubot remembers.
 // . ? forget <key> - Removes key from hubots brain.
-// . ? what are your favorite memories? - Returns a list of the most remembered memories.
+// . ? favorite memories - Returns a list of the most remembered memories.
 // . ? random memory - Returns a random string
 const each = require('lodash/each');
 const sequelize = require('sequelize');

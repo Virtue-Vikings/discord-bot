@@ -39,7 +39,7 @@ client.once('ready', () => {
         One day each of you will come face to face with the horror of your own existence.
         One day you will cry out for help. One day each of you will find yourselves alone.
     `);
-    const devChannel = client.channels.find(chan => chan.name === 'alia-bot');
+    const devChannel = client.channels.find(chan => chan.name === 'development');
     devChannel.send('Successfully deployed.');
 
     // Start server for webhooks.
@@ -55,7 +55,7 @@ client.on('message', async message => {
         return '';
     }
 
-    // Commands can tell Alia to do something specific.
+    // Commands can tell Odin to do something specific.
     //  STATIC_PREFIX are for strict command structures.
     //  DYNAMIC_PREFIX are for loose command structures.
     if (message.content.startsWith(STATIC_PREFIX)) {
@@ -82,7 +82,7 @@ client.on('message', async message => {
 });
 
 client.on('message', async message => {
-    // Alia doesn't respond to herslef and other bots.
+    // Odin doesn't respond to herslef and other bots.
     if (message.author.bot) {
         return '';
     }
