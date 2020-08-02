@@ -1,7 +1,6 @@
 const { stripIndent } = require('common-tags');
 const Discord = require('discord.js');
 const db = require('sequelize');
-const server = require('./lib/server');
 const response = require('./responses');
 const commands = require('./commands');
 const models = require('./models');
@@ -19,20 +18,19 @@ const sequelize = new db.Sequelize('database', 'user', 'password', {
     storage: 'database.sqlite',
 });
 
+const Adlibs = models.Adlibs(sequelize);
 const Config = models.Config(sequelize);
 const { Memories } = models.Memories(sequelize);
 const { Louds, Louds_Banned } = models.Louds(sequelize);
-const { Twitch_Users, Twitch_Notifications } = models.Twitch(sequelize);
 
 // Startup message
 client.once('ready', () => {
     // Sync tables.
+    Adlibs.sync();
     Config.sync();
     Louds.sync();
     Louds_Banned.sync();
     Memories.sync();
-    Twitch_Users.sync();
-    Twitch_Notifications.sync();
 
     // Announcements
     console.log(stripIndent`
@@ -41,11 +39,6 @@ client.once('ready', () => {
     `);
     const devChannel = client.channels.find(chan => chan.name === 'development');
     devChannel.send('Successfully deployed.');
-
-    // Start server for webhooks.
-    const genChannel = client.channels.find(chan => chan.name === 'general');
-    const twitchEmbed = new Discord.RichEmbed();
-    server(client, genChannel, twitchEmbed, { Twitch_Users, Twitch_Notifications });
 });
 
 client.login(process.env.BOT_TOKEN);
@@ -65,12 +58,14 @@ client.on('message', async message => {
 
         if (command === 'fear') {
             message.channel.send('Fear is the mindkiller.');
-        } else if (command === 'loud') {
-            commands.Louds(message, commandArgs, { Louds, Louds_Banned });
-        } else if (command === 'twitch') {
-            commands.Twitch(message, commandArgs, { Twitch_Users, Config });
+        } else if (command === 'adlib') {
+            commands.Adlibs(message, commandArgs, { Adlibs });
         } else if (command === 'config') {
             commands.Config(message, commandArgs, { Config });
+        } else if (command === 'dadjoke') {
+            commands.DadJokes(message);
+        } else if (command === 'loud') {
+            commands.Louds(message, commandArgs, { Louds, Louds_Banned });
         } else {
             return message.reply('Command not recognized.');
         }
@@ -90,4 +85,5 @@ client.on('message', async message => {
     // Call each response here. She will 'respond' to these functions.
     // They should have a regex, on what they are listening for.
     await response.Louds(message, { Louds, Louds_Banned });
+    await response.Adlibs(message, { Adlibs });
 });

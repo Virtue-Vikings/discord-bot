@@ -2,7 +2,7 @@ const { stripIndent } = require('common-tags');
 const memories = require('./memories');
 const botConfig = require('../config');
 
-describe('commands/config', () => {
+describe('commands/memories', () => {
     let message = {},
         model = {};
 
