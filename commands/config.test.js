@@ -107,5 +107,22 @@ describe('commands/config', () => {
             expect(reply).toBeCalledTimes(1);
             expect(reply).toBeCalledWith('Config subcommand does not exist.');
         });
+
+        it('respond to wrong user', async () => {
+            message.author = { id: '1234', username: 'otherguy' },
+            await config(message, 'add fake-key fake-value', model);
+            const reply = message.reply;
+            expect(reply).toBeCalledTimes(1);
+            expect(reply).toBeCalledWith('You may not pass!');
+        });
+
+        it('respond to error', async () => {
+            model.Config.findOne
+                .mockRejectedValue(new Error('error'));
+            await config(message, 'add fake-key fake-value', model);
+            const reply = message.reply;
+            expect(reply).toBeCalledTimes(1);
+            expect(reply).toBeCalledWith('Config command had an error.');
+        });
     });
 });
