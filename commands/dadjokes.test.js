@@ -4,10 +4,7 @@ jest.mock('axios');
 
 describe('commands/dadjokes', () => {
     describe('should', () => {
-        let message = {},
-            model = {},
-            request = {},
-            command = {};
+        let message = {};
 
         beforeEach(() => {
             message = {
@@ -18,18 +15,7 @@ describe('commands/dadjokes', () => {
                     .mockResolvedValue(true)
                     .mockName('reply'),
             };
-            model = {
-                DadJokes: {
-                    create: jest.fn().mockName('createDadJokes'),
-                    update: jest.fn().mockName('updateDadJokes'),
-                    destroy: jest.fn().mockName('destroyDadJokes'),
-                    findOne: jest
-                        .fn()
-                        .mockResolvedValue(false)
-                        .mockName('findOneDadJokes'),
-                },
-            };
-            axios.get.mockResolvedValue({data: { joke: 'fake-dad-joke'}});
+            axios.get.mockResolvedValue({ data: { joke: 'fake-dad-joke' } });
         });
 
         const run = (msg) => {
