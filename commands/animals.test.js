@@ -3,6 +3,10 @@ const botConfig = require('../config');
 const axios = require('axios');
 jest.mock('axios');
 
+const mockMath = Object.create(global.Math);
+mockMath.random = () => 1;
+global.Math = mockMath;
+
 describe('commands/animals', () => {
     let message = {};
 
@@ -41,20 +45,36 @@ describe('commands/animals', () => {
         expect(send).toBeCalledWith({ files: ['http://random.dog/fake-dog-image'] });
     });
 
+    it('should fetch a cute goat picture', async () => {
+        axios.get.mockResolvedValue({ data: 'fake-dog-image' });
+        await run('goat');
+        const send = message.channel.send;
+        expect(send).toBeCalledTimes(1);
+        expect(send).toBeCalledWith({ files: ['https://placegoat.com/800/800.jpg'] });
+    });
+
+    it('should fetch a cute fox picture', async () => {
+        axios.get.mockResolvedValue({ data: { image: 'fake-fox-image' } });
+        await run('fox');
+        const send = message.channel.send;
+        expect(send).toBeCalledTimes(1);
+        expect(send).toBeCalledWith({ files: ['fake-fox-image'] });
+    });
+
     it('should throw an error if not recognized', async () => {
         axios.get.mockResolvedValue({});
         await run('cat');
-        const error = message.error;
-        expect(error).toBeCalledTimes(1);
-        expect(error).toBeCalledWith('Failed to transform image URL!');
+        const send = message.channel.send;
+        expect(send).toBeCalledTimes(1);
+        expect(send).toBeCalledWith('Failed to transform image URL!');
     });
 
     it('should throw an error if failed to fetch', async () => {
         axios.get.mockRejectedValue(new Error('error'));
         await run('dog');
-        const error = message.error;
-        expect(error).toBeCalledTimes(1);
-        expect(error).toBeCalledWith('Failed to fetch data.');
+        const send = message.channel.send;
+        expect(send).toBeCalledTimes(1);
+        expect(send).toBeCalledWith('Failed to fetch data.');
     });
 
     it('should respond with animal not supported', async () => {
