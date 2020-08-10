@@ -61,6 +61,8 @@ client.on('message', async message => {
             message.channel.send('Fear is the mindkiller.');
         } else if (command === 'adlib') {
             commands.Adlibs(message, commandArgs, { Adlibs });
+        } else if (command === 'animal') {
+            commands.Animals(message, commandArgs);
         } else if (command === 'config') {
             commands.Config(message, commandArgs, { Config });
         } else if (command === 'dadjoke') {

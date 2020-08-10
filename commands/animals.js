@@ -14,16 +14,16 @@ const axios = require('axios');
 
 const getAnimal = async (msg, url, transformer) => {
     msg.edit(':arrows_counterclockwise:');
-    let body;
+    let res;
     try {
-        body = await axios.get(url);
+        res = await axios.get(url);
     } catch (error) {
         return msg.error('Failed to fetch data.');
     }
 
     let file;
     try {
-        file = transformer(body);
+        file = transformer(res.data);
     } catch (ignore) {
         return msg.error('Failed to transform image URL!');
     }

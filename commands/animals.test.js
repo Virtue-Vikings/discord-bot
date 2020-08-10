@@ -26,7 +26,7 @@ describe('commands/animals', () => {
     };
 
     it('should fetch a cute cat picture', async () => {
-        axios.get.mockResolvedValue([{ id: 'fake-id', url: 'fake-cat-picture' }]);
+        axios.get.mockResolvedValue({ data: [{ id: 'fake-id', url: 'fake-cat-picture' }] });
         await run('cat');
         const send = message.channel.send;
         expect(send).toBeCalledTimes(1);
@@ -34,7 +34,7 @@ describe('commands/animals', () => {
     });
 
     it('should fetch a cute dog picture', async () => {
-        axios.get.mockResolvedValue('fake-dog-image');
+        axios.get.mockResolvedValue({ data: 'fake-dog-image' });
         await run('dog');
         const send = message.channel.send;
         expect(send).toBeCalledTimes(1);
