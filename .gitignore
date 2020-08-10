@@ -1,5 +1,7 @@
 node_modules
-load_token.bash
+load_variables.bash
 database.sqlite
 coverage
 scratches
+.vscode
+database.env

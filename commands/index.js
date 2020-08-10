@@ -1,3 +1,4 @@
+/* ignore file coverage */
 const Adlibs = require('./adlibs');
 const Config = require('./config');
 const DadJokes = require('./dadjokes');

@@ -11,8 +11,9 @@ const STATIC_PREFIX = '!';
 const DYNAMIC_PREFIX = '?';
 
 // TODO: Update database with username and password.
+const dbAddress = process.env.DB_HOST;
 const sequelize = new db.Sequelize('database', 'user', 'password', {
-    host: 'localhost',
+    host: dbAddress,
     dialect: 'sqlite',
     logging: false,
     storage: 'database.sqlite',
@@ -37,7 +38,7 @@ client.once('ready', () => {
         One day each of you will come face to face with the horror of your own existence.
         One day you will cry out for help. One day each of you will find yourselves alone.
     `);
-    const devChannel = client.channels.find(chan => chan.name === 'development');
+    const devChannel = client.channels.cache.find(chan => chan.name === 'development');
     devChannel.send('Successfully deployed.');
 });
 
@@ -77,12 +78,12 @@ client.on('message', async message => {
 });
 
 client.on('message', async message => {
-    // Odin doesn't respond to herslef and other bots.
+    // Odin doesn't respond to itself and other bots.
     if (message.author.bot) {
         return '';
     }
 
-    // Call each response here. She will 'respond' to these functions.
+    // Call each response here. It will 'respond' to these functions.
     // They should have a regex, on what they are listening for.
     await response.Louds(message, { Louds, Louds_Banned });
     await response.Adlibs(message, { Adlibs });
