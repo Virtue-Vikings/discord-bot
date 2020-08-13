@@ -61,7 +61,7 @@ client.on('message', async message => {
             message.channel.send('Fear is the mindkiller.');
         } else if (command === 'adlib') {
             commands.Adlibs(message, commandArgs, { Adlibs });
-        } else if (command === 'animal') {
+        } else if (command === 'animal' || command === 'animals') {
             commands.Animals(message, commandArgs);
         } else if (command === 'config') {
             commands.Config(message, commandArgs, { Config });
@@ -89,4 +89,18 @@ client.on('message', async message => {
     // They should have a regex, on what they are listening for.
     await response.Louds(message, { Louds, Louds_Banned });
     await response.Adlibs(message, { Adlibs });
+});
+
+client.on('guildMemberAdd', async member => {
+    const channel = member.guild.channels.cache.find(ch => ch.name === 'new-members');
+    if (!channel) return;
+    channel.send(`Welcome to the server, ${member}.`);
+
+    const record = await Config.findOne({ where: { key: 'welcomeMessage' } });
+    if (!record) {
+        const devChannel = member.guild.channels.cache.find(ch => ch.name === 'development');
+        devChannel.send('welcomeMessage is not configured!');
+        return;
+    }
+    channel.send(record.value);
 });

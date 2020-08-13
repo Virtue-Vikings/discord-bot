@@ -41,9 +41,9 @@ describe('commands/memories', () => {
                 .mockResolvedValue({ value: 'fake-value' })
                 .mockName('Memories.findOne.true');
             await memories(message, model);
-            const reply = message.reply;
-            expect(reply).toBeCalledTimes(1);
-            expect(reply).toBeCalledWith('"fake-key" is "fake-value".');
+            const send = message.channel.send;
+            expect(send).toBeCalledTimes(1);
+            expect(send).toBeCalledWith('fake-value');
         });
 
         it('what is <key>', async () => {
@@ -53,9 +53,9 @@ describe('commands/memories', () => {
                 .mockResolvedValue({ value: 'fake-value' })
                 .mockName('Memories.findOne.true');
             await memories(message, model);
-            const reply = message.reply;
-            expect(reply).toBeCalledTimes(1);
-            expect(reply).toBeCalledWith('"fake-key" is "fake-value".');
+            const send = message.channel.send;
+            expect(send).toBeCalledTimes(1);
+            expect(send).toBeCalledWith('fake-value');
         });
 
         it('remember <key>', async () => {
@@ -65,9 +65,9 @@ describe('commands/memories', () => {
                 .mockResolvedValue({ value: 'fake-value' })
                 .mockName('Memories.findOne.true');
             await memories(message, model);
-            const reply = message.reply;
-            expect(reply).toBeCalledTimes(1);
-            expect(reply).toBeCalledWith('"fake-key" is "fake-value".');
+            const send = message.channel.send;
+            expect(send).toBeCalledTimes(1);
+            expect(send).toBeCalledWith('fake-value');
         });
 
         it('rem <key>', async () => {
@@ -77,9 +77,9 @@ describe('commands/memories', () => {
                 .mockResolvedValue({ value: 'fake-value' })
                 .mockName('Memories.findOne.true');
             await memories(message, model);
-            const reply = message.reply;
-            expect(reply).toBeCalledTimes(1);
-            expect(reply).toBeCalledWith('"fake-key" is "fake-value".');
+            const send = message.channel.send;
+            expect(send).toBeCalledTimes(1);
+            expect(send).toBeCalledWith('fake-value');
         });
 
         // . ? <key> is <value>. - Returns confirmation.

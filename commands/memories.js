@@ -28,7 +28,7 @@ const getMemory = async (params, terms) => {
     const { message, Memories } = params;
     const { key } = terms;
     const record = await Memories.findOne({ where: { key } });
-    if (record) return message.reply(`"${key}" is "${record.value}".`);
+    if (record) return message.channel.send(`${record.value}`);
     return message.reply(`I have no memory of "${key}".`);
 };
 
