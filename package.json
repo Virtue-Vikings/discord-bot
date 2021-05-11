@@ -19,7 +19,7 @@
         "discord.js": "^12.2.0",
         "eslint": "^5.15.1",
         "hapi": "^18.1.0",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "prettier": "^1.16.4",
         "sequelize": "^5.22.3",
         "sqlite3": "^4.2.0",
